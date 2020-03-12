@@ -8,10 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Categoria implements Serializable {
+public class Produto implements Serializable {
 	//iterface Serializable tem objetivo de  ser convertido em byte e trafegar em rede, arquivo
 	private static final long serialVersionUID = 1L;
 	
@@ -19,21 +21,32 @@ public class Categoria implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	private Double preco ;
 	
-	//mapeamento de atributo categorias da classe Produto que ja foi feito o relacionamento
-	// com isso nao precisa repetir
-	@ManyToMany(mappedBy="categorias")
-	private List<Produto> produtos = new ArrayList<>();
+	// criacao de uma nova tabela para identificar o manytomny entre produto e categoria
+	//criacao da chave estrangeira produto_id
+	//outra chave estrangeira categoria_id
+	@ManyToMany
+	@JoinTable(name="PRODUTO_CATEGORIA",
+	joinColumns = @JoinColumn(name = "produto_id"),
+	inverseJoinColumns = @JoinColumn( name = "categoria_id")
+	)
+	private List<Categoria> categorias = new ArrayList<>();
 	
-	public Categoria() {
+	public Produto() {
 		
 	}
-
-	public Categoria(Integer id, String nome) {
+	
+	
+	
+	public Produto(Integer id, String nome, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.preco = preco;
 	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -50,17 +63,31 @@ public class Categoria implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	public List<Produto> getProdutos() {
-		return produtos;
-	}
-
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
-	}
 
 	
-	// comparar o conteudo do objeto por valor e nao por ponteiro
+
+	public Double getPreco() {
+		return preco;
+	}
+
+
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -68,6 +95,8 @@ public class Categoria implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -77,7 +106,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Produto other = (Produto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -85,7 +114,7 @@ public class Categoria implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 	
 	
 	
