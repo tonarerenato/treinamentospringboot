@@ -31,7 +31,6 @@ public class Cliente implements Serializable {
 	private String cpfouCnpj;
 	private Integer tipo;
 	
-	
 	@JsonManagedReference
 	@OneToMany(mappedBy="cliente")
 	private List <Endereco> endereco = new ArrayList<>();
@@ -40,6 +39,9 @@ public class Cliente implements Serializable {
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
+	
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public Cliente() {
 	}
@@ -108,6 +110,14 @@ public class Cliente implements Serializable {
 	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo.getCod();
 	}
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 
 	@Override
 	public int hashCode() {
@@ -133,6 +143,8 @@ public class Cliente implements Serializable {
 			return false;
 		return true;
 	}
+
+
 	
 	
 	
