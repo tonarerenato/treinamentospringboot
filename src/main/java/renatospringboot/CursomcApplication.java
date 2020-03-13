@@ -13,6 +13,7 @@ import renatospringboot.domain.Cidade;
 import renatospringboot.domain.Cliente;
 import renatospringboot.domain.Endereco;
 import renatospringboot.domain.Estado;
+import renatospringboot.domain.ItemPedido;
 import renatospringboot.domain.Pagamento;
 import renatospringboot.domain.PagamentoComBoleto;
 import renatospringboot.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import renatospringboot.repositories.CidadeRepository;
 import renatospringboot.repositories.ClienteRepository;
 import renatospringboot.repositories.EnderecoRepository;
 import renatospringboot.repositories.EstadoRepository;
+import renatospringboot.repositories.ItemPedidoRepository;
 import renatospringboot.repositories.PagamentoRepository;
 import renatospringboot.repositories.PedidoRepository;
 import renatospringboot.repositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 
 	//CommandLineRunner permite um metodo auxiliar quando a aplicacao iniciar
@@ -121,6 +126,20 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
+		
 
 	}
 
