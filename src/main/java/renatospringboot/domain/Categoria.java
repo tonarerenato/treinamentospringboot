@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Categoria implements Serializable {
 	//iterface Serializable tem objetivo de  ser convertido em byte e trafegar em rede, arquivo
@@ -24,7 +22,7 @@ public class Categoria implements Serializable {
 	
 	//mapeamento de atributo categorias da classe Produto que ja foi feito o relacionamento
 	// com isso nao precisa repetir
-	@JsonManagedReference   // por causa do conflito many to many
+	   // por causa do conflito many to many
 	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	

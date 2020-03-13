@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -32,7 +31,7 @@ public class Produto implements Serializable {
 	// criacao de uma nova tabela para identificar o manytomny entre produto e categoria
 	//criacao da chave estrangeira produto_id
 	//outra chave estrangeira categoria_id
-	@JsonBackReference // do outro lado da assciacao ja foram buscado os objetos agora nao vai precisar
+	@JsonIgnore // do outro lado da assciacao ja foram buscado os objetos agora nao vai precisar
 	@ManyToMany
 	@JoinTable(name="PRODUTO_CATEGORIA",
 	joinColumns = @JoinColumn(name = "produto_id"),
