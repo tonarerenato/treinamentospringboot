@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Cidade implements Serializable {
 	//iterface Serializable tem objetivo de  ser convertido em byte e trafegar em rede, arquivo
@@ -20,6 +22,7 @@ public class Cidade implements Serializable {
 	
 	private String cidade;
 	
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="estado_id") // chave extrangeira
 	private Estado estado;
