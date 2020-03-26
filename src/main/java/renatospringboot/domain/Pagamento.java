@@ -11,11 +11,13 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import renatospringboot.domain.enums.EstadoPagamento;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED) // com Join é mais de uma tabela e SingeTable é apenas uma
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type") // type para saber qual é o tipo de pagamento
 public abstract class Pagamento implements Serializable {
 	//iterface Serializable tem objetivo de  ser convertido em byte e trafegar em rede, arquivo
 	private static final long serialVersionUID = 1L;
