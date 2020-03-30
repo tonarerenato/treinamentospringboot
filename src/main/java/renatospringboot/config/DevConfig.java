@@ -9,9 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import renatospringboot.services.DBService;
+import renatospringboot.services.EmailService;
+import renatospringboot.services.MockEmailService;
 
 @Configuration
-@Profile("test")
+@Profile("dev")
 public class DevConfig {
 	
 	@Autowired
@@ -29,6 +31,11 @@ public class DevConfig {
 		dbService.instantiateTestDatabase();
 		
 		return true;
+	}
+	
+	@Bean
+	public EmailService emailService() {
+		return new MockEmailService();
 	}
 
 }
