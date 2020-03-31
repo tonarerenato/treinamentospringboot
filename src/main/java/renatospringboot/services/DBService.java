@@ -20,6 +20,7 @@ import renatospringboot.domain.PagamentoComCartao;
 import renatospringboot.domain.Pedido;
 import renatospringboot.domain.Produto;
 import renatospringboot.domain.enums.EstadoPagamento;
+import renatospringboot.domain.enums.Perfil;
 import renatospringboot.domain.enums.TipoCliente;
 import renatospringboot.repositories.CategoriaRepository;
 import renatospringboot.repositories.CidadeRepository;
@@ -128,16 +129,23 @@ public class DBService {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 		
-		Cliente cli1 = new Cliente(null, "Maria Silva", "renatopersonwork@gmail.com","42342343", TipoCliente.PESSOAFISICA, pe.encode("123"));
+		Cliente cli1 = new Cliente(null, "Maria Silva", "renatopersonwork@gmail.com","19809907001", TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("1316584","4563135456"));
+		
+		Cliente cli2 = new Cliente(null, "Ana Costa", "tonarerenato@yahoo.com", "31628382740", TipoCliente.PESSOAFISICA, pe.encode("123"));
+		cli2.getTelefones().addAll(Arrays.asList("93883321", "34252625"));
+		cli2.addPerfil(Perfil.ADMIN);
 		
 		Endereco e1 = new Endereco(null,"Rua das Flores", "300", "Apto 303","Jandira", "423423", cli1, c1);
 		Endereco e2 = new Endereco(null,"Avenida Matos", "105", "Sala 800","Centro", "5353423", cli1, c2);
+		Endereco e3 = new Endereco(null, "Avenida Floriano", "2106", null, "Centro", "281777012", cli2, c2);
 		
 		cli1.getEndereco().addAll(Arrays.asList(e1,e2));
+		cli2.getEndereco().addAll(Arrays.asList(e3));
 		
-		clienteRepository.saveAll(Arrays.asList(cli1));
-		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2,e3));
+		
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
@@ -151,6 +159,7 @@ public class DBService {
 		ped2.setPagamento(pagto2);
 		
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
