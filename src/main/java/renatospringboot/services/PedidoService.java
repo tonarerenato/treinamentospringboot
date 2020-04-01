@@ -6,8 +6,12 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import renatospringboot.domain.Cliente;
 import renatospringboot.domain.ItemPedido;
 import renatospringboot.domain.PagamentoComBoleto;
 import renatospringboot.domain.Pedido;
@@ -15,6 +19,8 @@ import renatospringboot.domain.enums.EstadoPagamento;
 import renatospringboot.repositories.ItemPedidoRepository;
 import renatospringboot.repositories.PagamentoRepository;
 import renatospringboot.repositories.PedidoRepository;
+import renatospringboot.security.UserSS;
+import renatospringboot.services.exceptions.AuthorizationException;
 import renatospringboot.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -70,6 +76,16 @@ public class PedidoService {
 		itemPedidoRepository.saveAll(obj.getItens());
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
+	}
+	
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Cliente cliente =  clienteService.find(user.getId());
+		return repo.findByCliente(cliente, pageRequest);
 	}
 
 	
