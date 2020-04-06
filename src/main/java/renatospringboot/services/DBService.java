@@ -232,7 +232,7 @@ public class DBService {
 		cli2.getEndereco().addAll(Arrays.asList(e3));
 		
 		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
-		enderecoRepository.saveAll(Arrays.asList(e1, e2,e3));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2,e3)); 
 		
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
