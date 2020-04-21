@@ -2,8 +2,10 @@ package renatospringboot.dto;
 
 import java.io.Serializable;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -23,6 +25,9 @@ public class ClienteNewDTO implements Serializable {
 	
 	//@NotEmpty(message="Preenchimento obrigatório")
 	private String cpfouCnpj;
+	
+	
+	//@NotNull
 	private Integer tipo;
 	
 	@NotEmpty(message="Preenchimento obrigatório")

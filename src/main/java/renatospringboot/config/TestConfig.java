@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import renatospringboot.services.DBService;
+import renatospringboot.services.EmailService;
+import renatospringboot.services.MockEmailService;
 
 //@Configuration
 //@Profile("dev")
@@ -21,6 +23,11 @@ public class TestConfig {
 //		dbService.instantiateTestDatabase();
 //		
 //		return true;
+//	}
+	
+//	@Bean
+//	public EmailService emailService() {
+//		return new MockEmailService();
 //	}
 
 }

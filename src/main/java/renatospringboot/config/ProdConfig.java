@@ -13,8 +13,8 @@ import renatospringboot.services.EmailService;
 import renatospringboot.services.SmtpEmailService;
 
 @Configuration
-@Profile("prod")
-public class DevConfig {
+@Profile("dev")
+public class ProdConfig {
 	
 	@Autowired
 	private DBService dbService;
